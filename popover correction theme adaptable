@@ -1,0 +1,38 @@
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.table.discussion-list.generaltable [data-toggle="popover"]').forEach(function(button) {
+        button.addEventListener('click', function() {
+            setTimeout(function() {
+                var popoverId = button.getAttribute('aria-describedby');
+                if (popoverId) {
+                    var popover = document.getElementById(popoverId);
+                    if (popover) {
+
+                        let content = button.getAttribute('data-content');
+
+
+                        function cleanContent(content) {
+
+                            content = content.replace(/\\n/g, '');    
+                            content = content.replace(/<\/?li>/g, ''); 
+                            content = content.replace(/<\/?ul>/g, '');
+                            content = content.replace(/[<>\/\\|]/g, ''); 
+                            
+
+                            content = content.replace(/\bli\b/g, ''); 
+                            content = content.replace(/\bliul\b/g, '');
+                            content = content.replace(/\bbr\b/g, '');
+                            
+
+                            return content;
+                        }
+                        let cleanedContent = cleanContent(content);
+                        cleanedContent = cleanContent(cleanedContent);
+                        popover.querySelector('.popover-body').innerHTML = cleanedContent;
+                    }
+                }
+            }, 100);
+        });
+    });
+});
+</script>
